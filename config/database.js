@@ -9,8 +9,6 @@ const url = process.env.MONGO_URL;
 const connection = mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true})
 .then(client => {
     console.log('Connected to Database');
-    const db = client.db('myFirstDatabase');
-    const col = db["attendance"];
 });
 
 mongoose.connection.on('connected', ()=> {

@@ -1,4 +1,4 @@
-var attendance = require("../models/user.js");
+var attendance = require("../models/student.js");
 
 class ErrorEmailAlreadyExists extends Error {
     
@@ -13,12 +13,12 @@ class ErrorEmailAlreadyExists extends Error {
 class BaseDeDatos {
 
     constructor(){
-        this.userModel = attendance;
+        this.studentModel = attendance;
     }
 
-    async user_email_exists(email) {
+    async student_email_exists(email) {
 
-        return this.userModel
+        return this.studentModel
                     .findOne({ email: email })
                     .select("email")
                     .lean()
@@ -28,23 +28,23 @@ class BaseDeDatos {
                     });
     }
 
-    async add_user(email, date, course, image) {
+    async add_student(email, date, course, image) {
         
-        if (await this.user_email_exists(email)){
+        if (await this.student_email_exists(email)){
             console.log("Error: " + email + " ya existe.");
             throw new ErrorEmailAlreadyExists();
         }
         
         console.log("Alumno nuevo, se agrega a la lista.");
         const obj = JSON.stringify({email: email, date: date, course:course, image:image});
-        const user_structure = new this.userModel(JSON.parse(obj));
-        user_structure.save();
-        return user_structure;
+        const student_structure = new this.studentModel(JSON.parse(obj));
+        student_structure.save();
+        return student_structure;
 
 
     }
 
-    async edit_user(email, date, course, image) {
+    async edit_student(email, date, course, image) {
 
         try {            
             if(email === '') {email = null;}
@@ -78,22 +78,22 @@ class BaseDeDatos {
                 throw new ErrorFieldIsEmpty("image");
             }
             
-            if (await this.user_email_exists(email)){
+            if (await this.student_email_exists(email)){
                 console.log("Error: " + email + " ya existe.");
                 throw new ErrorEmailAlreadyExists();
             }
 
             const obj = JSON.stringify({email: email, date: date, course:course, image:image});
-            let user_structure = new this.userModel(JSON.parse(obj));
+            let student_structure = new this.studentModel(JSON.parse(obj));
 
-            await this.userModel.findByIdAndUpdate(id, JSON.parse(obj), {new: true},  function (err, user_structure) {
+            await this.studentModel.findByIdAndUpdate(id, JSON.parse(obj), {new: true},  function (err, student_structure) {
                 if (err){
                     console.log("Error: " + err.toString());
                 } else{
                     console.log("ID del usuario actualizado: ", id);
                 }
             }).clone();
-            return user_structure;
+            return student_structure;
         } catch (e){
             if (e instanceof ErrorFieldIsEmpty || e instanceof ErrorEmailAlreadyExists) {
                 throw e;
