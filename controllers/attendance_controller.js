@@ -5,7 +5,7 @@ let baseDeDatos = new BaseDeDatos();
 const add_student = async (req, res, next) => {
 
   try {
-      const student = await baseDeDatos.add_student(req.query.email, req.query.date, req.query.course, req.query.image)
+      const student = await baseDeDatos.add_student(req.body.email, req.body.date, req.body.course, req.body.image)
       res.send(student);
   } catch (error) {
       res.status(500).send(error);
