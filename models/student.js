@@ -5,7 +5,8 @@ const attendanceSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase: true
+    lowercase: true,
+    unique: true
   },
   date: {
     type: Date,
@@ -18,11 +19,10 @@ const attendanceSchema = new mongoose.Schema({
     required: true,
     trim: true,
     lowercase: true,
-    unique: true,
   },
   image: {
-      data: Buffer,
-      contentType: String
+    type: String,
+    required: true,
   }
 });
 

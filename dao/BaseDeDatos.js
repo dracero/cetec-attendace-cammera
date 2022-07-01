@@ -40,8 +40,6 @@ class BaseDeDatos {
         const student_structure = new this.studentModel(JSON.parse(obj));
         student_structure.save();
         return student_structure;
-
-
     }
 
     async edit_student(email, date, course, image) {
