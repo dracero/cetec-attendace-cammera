@@ -32,8 +32,22 @@ const delete_student = async (req, res, next) => {
   }
 }
 
+const logout = (req, res, next) => {
+
+  console.log(req.user.email + " ha cerrado sesión.");
+
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.clearCookie("token");
+    res.redirect("http://localhost:3000/");
+    console.log(`-------> User Logged out`);
+  });
+
+}
+
 module.exports = {
   add_student,
   put_student,
-  delete_student
+  delete_student,
+  logout
 };

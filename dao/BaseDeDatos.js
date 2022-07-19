@@ -102,4 +102,3 @@ class BaseDeDatos {
 }
 
 module.exports = BaseDeDatos;
-
