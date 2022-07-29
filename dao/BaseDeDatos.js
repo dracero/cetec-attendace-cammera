@@ -23,7 +23,6 @@ class BaseDeDatos {
                     .select("email")
                     .lean()
                     .then(result => {
-                        console.log(result);
                         return result != null;
                     });
     }
