@@ -1,40 +1,12 @@
 var attendance = require("../models/student.js");
 
-class ErrorEmailAlreadyExists extends Error {
-    
-    constructor() {
-        
-        super();
-        this.name = 'Error: ya existe un usuario con el mismo email.';
-        Error.captureStackTrace(this, this.constructor);
-    }
-}
-
 class BaseDeDatos {
 
     constructor(){
         this.studentModel = attendance;
     }
 
-    async student_email_exists(email) {
-
-        return this.studentModel
-                    .findOne({ email: email })
-                    .select("email")
-                    .lean()
-                    .then(result => {
-                        console.log(result);
-                        return result != null;
-                    });
-    }
-
     async add_student(email, date, course, image) {
-        
-        if (await this.student_email_exists(email)){
-            console.log("Error: " + email + " ya existe.");
-            throw new ErrorEmailAlreadyExists();
-        }
-        
         console.log("Alumno nuevo, se agrega a la lista.");
         const obj = JSON.stringify({email: email, date: date, course:course, image:image});
         const student_structure = new this.studentModel(JSON.parse(obj));
@@ -75,11 +47,6 @@ class BaseDeDatos {
                 console.log("Error: imagen vacía.");
                 throw new ErrorFieldIsEmpty("image");
             }
-            
-            if (await this.student_email_exists(email)){
-                console.log("Error: " + email + " ya existe.");
-                throw new ErrorEmailAlreadyExists();
-            }
 
             const obj = JSON.stringify({email: email, date: date, course:course, image:image});
             let student_structure = new this.studentModel(JSON.parse(obj));
@@ -96,7 +63,6 @@ class BaseDeDatos {
             if (e instanceof ErrorFieldIsEmpty || e instanceof ErrorEmailAlreadyExists) {
                 throw e;
             }
-            throw new ErrorEmailAlreadyExists(); // ??
         }
     }
 }
