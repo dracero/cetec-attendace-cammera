@@ -39,7 +39,7 @@ const logout = (req, res, next) => {
   req.logout(function(err) {
     if (err) { return next(err); }
     res.clearCookie("token");
-    res.redirect("http://localhost:3000/");
+    res.redirect(process.env.FRONT_URL);
     console.log(`-------> User Logged out`);
   });
 
