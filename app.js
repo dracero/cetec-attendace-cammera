@@ -107,7 +107,8 @@ app.get(
       
       console.log(req.user.email + " ha iniciado sesión.");  
     }      
-    res.redirect(process.env.FRONT_URL);
+    //res.redirect(process.env.FRONT_URL);
+    res.send("Hola")
   }
 );
 
