@@ -100,7 +100,7 @@ app.get('/auth/google',
 app.get(
   '/oauth2/redirect/google',
   passport.authenticate('google'), 
-  function (req, res) {
+  await function (req, res) {
     if (req.user) {
       const token = jwt.sign({id:req.user.email}, process.env.JWT_SECRET_KEY, {expiresIn: process.env.TOKEN_KEEP_ALIVE}); 
       res.cookie('token', token);
