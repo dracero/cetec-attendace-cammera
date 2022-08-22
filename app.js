@@ -114,7 +114,7 @@ app.get(
 app.get('/oauth2/redirect/google',
   passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
   function(req, res) {
-    res.send("Hola");
+    res.send(req.user);
   });
 
 passport.use(new JWTstrategy( 
