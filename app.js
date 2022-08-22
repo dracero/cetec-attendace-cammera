@@ -96,11 +96,11 @@ app.get('/auth/google',
     ]
   })
 );
-/*Borro esta para probar
+
 app.get(
   '/oauth2/redirect/google',
-  passport.authenticate("google"),
-  async function (req, res) {
+  passport.authenticate('google'), 
+  function (req, res) {
     if (req.user) {
       const token = jwt.sign({id:req.user.email}, process.env.JWT_SECRET_KEY, {expiresIn: process.env.TOKEN_KEEP_ALIVE}); 
       res.cookie('token', token);
@@ -108,14 +108,13 @@ app.get(
       console.log(req.user.email + " ha iniciado sesión.");  
     }      
     res.redirect(process.env.FRONT_URL);
-  }
-);
-*/
-app.get('/oauth2/redirect/google',
+  });
+
+/*app.get('/oauth2/redirect/google',
   passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
   function(req, res) {
     res.send(req.user);
-  });
+  }); Eta funciona*/
 
 passport.use(new JWTstrategy( 
   jwtOptions,
