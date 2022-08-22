@@ -96,7 +96,7 @@ app.get('/auth/google',
     ]
   })
 );
-
+/*Borro esta para probar
 app.get(
   '/oauth2/redirect/google',
   passport.authenticate("google"),
@@ -107,10 +107,15 @@ app.get(
       
       console.log(req.user.email + " ha iniciado sesión.");  
     }      
-    //res.redirect(process.env.FRONT_URL);
-    res.send("Hola")
+    res.redirect(process.env.FRONT_URL);
   }
 );
+*/
+app.get('/oauth2/redirect/google',
+  passport.authenticate('google', { failureRedirect: '/login', failureMessage: true }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 passport.use(new JWTstrategy( 
   jwtOptions,
